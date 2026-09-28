@@ -10,7 +10,7 @@ et un chiffrement des données sensibles.
 ![Python](https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-6.0-092E20?logo=django&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
-![Expo](https://img.shields.io/badge/Expo-SDK_56-000020?logo=expo&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-3.22%2B-02569B?logo=flutter&logoColor=white)
 ![License](https://img.shields.io/badge/Usage-Académique-lightgrey)
 
 ---
@@ -37,14 +37,15 @@ et un chiffrement des données sensibles.
 |---|---|---|
 | Backend | Django 6 + DRF 3.17, PostgreSQL, JWT (SimpleJWT) | API métier, blockchain, fraude, certificats PDF |
 | Frontend | React 19 + Vite, Leaflet, Recharts | Application web d'administration du registre |
-| Mobile | React Native + Expo (Expo Router) | Consultation terrain, scan QR, notifications push |
+| Mobile | **Flutter** (Material 3, design system « Cadastre ») | Consultation terrain, scan QR, mode hors-ligne, biométrie |
 
 ```
 ┌──────────────────────────────────────────────────────┐
 │                       Clients                         │
-│   Navigateur (React 19)    │   Mobile (Expo SDK 56)   │
-│   Cookie httpOnly JWT       │   Bearer + SecureStore   │
-└────────────┬───────────────┴──────────────┬───────────┘
+│   Navigateur (React 19)   │   Mobile (Flutter M3)     │
+│   Cookie httpOnly JWT      │   Bearer + Keystore/      │
+│                            │   Keychain                │
+└────────────┬──────────────┴──────────────┬───────────┘
              │ HTTPS / CORS                 │ HTTPS
              ▼                              ▼
 ┌──────────────────────────────────────────────────────┐
@@ -66,7 +67,7 @@ et un chiffrement des données sensibles.
 ```
 
 En développement, le frontend proxifie `/api/*` et `/media/*` vers le backend via Vite.
-Le mobile contacte directement le backend via l'IP réseau locale (voir `mobile/src/constants/config.js`).
+Le mobile contacte directement le backend via l'IP réseau locale (voir `mobile/lib/core/config.dart`).
 
 ## 2. Structure du dépôt
 
@@ -83,7 +84,8 @@ Trustland/
 │       ├── pages/        15 écrans (registre, carte, blockchain, litiges…)
 │       ├── context/      AuthContext (session, refresh proactif)
 │       └── assets/       Logo, plan cadastral du hero
-├── mobile/           Expo Router — écrans (tabs) + (auth)
+├── mobile/           Flutter Material 3 — design system « Cadastre » partagé
+│   └── lib/          core (thème, réseau JWT), screens, widgets, state
 └── docs/             Cahiers des charges, rapports de tests, visuels
 ```
 
@@ -126,16 +128,25 @@ npm install
 npm run dev          # http://localhost:5173 — proxifie /api vers :8000
 ```
 
-### 3.3 Mobile (Expo) — optionnel
+### 3.3 Mobile (Flutter) — optionnel
+
+Prérequis : Flutter SDK ≥ 3.22 (`flutter doctor` sans erreur).
 
 ```bash
 cd mobile
-npm install
-# Renseigner l'IP du backend dans src/constants/config.js
-npx expo start       # QR code Expo Go, ou : npx expo start --android
+flutter pub get
+# Génère android/ + ios/ localement (non versionnés), puis ajoutez
+# les permissions listées dans mobile/README.md :
+flutter create . --org com.trustland --project-name trustland_mobile \
+    --platforms android,ios
+# Renseigner l'IP du backend dans lib/core/config.dart
+flutter run
 ```
 
-**Ordre de démarrage** : PostgreSQL → Backend (:8000) → Frontend (:5173) et/ou Mobile (:8081).
+Détails complets (permissions, architecture, équivalences Expo → Flutter) :
+[`mobile/README.md`](mobile/README.md).
+
+**Ordre de démarrage** : PostgreSQL → Backend (:8000) → Frontend (:5173) et/ou Mobile.
 
 ## 4. Variables d'environnement
 
@@ -241,6 +252,10 @@ institutionnel, aligné sur l'identité du logo (vert + bleu) :
 
 Les tokens sont centralisés dans [`frontend/src/index.css`](frontend/src/index.css) ;
 les icônes (famille unique Heroicons outline) dans [`frontend/src/components/icons.jsx`](frontend/src/components/icons.jsx).
+
+Le mobile Flutter applique **la même palette et les mêmes rayons** (thème Material 3
+construit manuellement dans [`mobile/lib/core/theme/app_theme.dart`](mobile/lib/core/theme/app_theme.dart)) —
+une seule identité visuelle sur le web et sur mobile.
 
 ## 10. Tests
 
