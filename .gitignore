@@ -1,0 +1,56 @@
+# ── Python / Django ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+
+# Bases de données locales
+*.sqlite3
+*.db
+
+# Migrations générées ne doivent pas être ignorées — mais les logs oui
+backend/logs/
+*.log
+
+# Médias générés à l'exécution (documents utilisateurs, QR codes)
+backend/media/
+!backend/media/.gitkeep
+
+# Fichiers d'environnement — ne jamais commiter de secrets
+.env
+.env.*
+!.env.example
+
+# ── Node / Frontend ──────────────────────────────────────────────
+node_modules/
+dist/
+build/
+.vite/
+*.local
+npm-debug.log*
+yarn-error.log*
+
+# ── Mobile / Expo ────────────────────────────────────────────────
+.expo/
+.expo-shared/
+ios/
+android/
+
+# ── Éditeurs & OS ────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Divers ───────────────────────────────────────────────────────
+*.bak
+*.tmp
+~$*
