@@ -8,9 +8,9 @@ import { STATUT_LABELS } from '../utils'
 const LOME = [6.1375, 1.2123]
 
 const STATUT_COLORS = {
-  libre:          '#2563eb',
-  en_transaction: '#60a5fa',
-  litige:         '#1d4ed8',
+  libre:          '#1e5a31',
+  en_transaction: '#1d5c96',
+  litige:         '#b3261e',
 }
 
 function parseGPS(str) {
@@ -41,15 +41,15 @@ export default function Carte() {
         <h2>Carte des terrains</h2>
         <div className="carte-legend">
           <span className="legend-item">
-            <span className="legend-dot" style={{ background: '#2563eb' }} />
+            <span className="legend-dot" style={{ background: '#1e5a31' }} />
             Libre
           </span>
           <span className="legend-item">
-            <span className="legend-dot" style={{ background: '#60a5fa' }} />
+            <span className="legend-dot" style={{ background: '#1d5c96' }} />
             En transaction
           </span>
           <span className="legend-item">
-            <span className="legend-dot" style={{ background: '#1d4ed8' }} />
+            <span className="legend-dot" style={{ background: '#b3261e' }} />
             Litige
           </span>
         </div>
@@ -72,7 +72,7 @@ export default function Carte() {
               />
               {withGPS.map(t => {
                 const pos   = parseGPS(t.coordonnees_gps)
-                const color = STATUT_COLORS[t.statut] ?? '#94a3b8'
+                const color = STATUT_COLORS[t.statut] ?? '#5d675e'
                 const prop  = t.proprietaire_actuel_detail
                 return (
                   <CircleMarker

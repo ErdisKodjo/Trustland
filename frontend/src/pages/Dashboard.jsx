@@ -6,15 +6,15 @@ import {
 import api from '../api/client'
 
 const STATUT_COLORS = {
-  libre:          '#2563eb',
-  en_transaction: '#60a5fa',
-  litige:         '#1d4ed8',
+  libre:          '#1e5a31',   // vert cadastre
+  en_transaction: '#1d5c96',   // bleu info harmonisé
+  litige:         '#b3261e',   // rouge danger
 }
 
 const NIVEAU_COLORS = {
-  faible:   '#93c5fd',
-  moyen:    '#3b82f6',
-  critique: '#1e40af',
+  faible:   '#b9d4c0',
+  moyen:    '#b45309',
+  critique: '#b3261e',
 }
 
 function StatCard({ label, value, color, sub }) {
@@ -37,7 +37,7 @@ export default function Dashboard() {
       .catch(() => setLoading(false))
   }, [])
 
-  if (loading) return <div className="page"><p className="text-muted">Chargement…</p></div>
+  if (loading) return <div className="page"><div className="skeleton skeleton-card" aria-label="Chargement" /></div>
   if (!stats)  return (
     <div className="page">
       <p className="text-muted">Impossible de charger les statistiques.</p>
@@ -53,7 +53,7 @@ export default function Dashboard() {
   const pieData = (stats.alertes_par_niveau ?? []).map(a => ({
     name:  a.niveau.charAt(0).toUpperCase() + a.niveau.slice(1),
     value: a.count,
-    fill:  NIVEAU_COLORS[a.niveau] ?? '#94a3b8',
+    fill:  NIVEAU_COLORS[a.niveau] ?? '#5d675e',
   }))
 
   return (
@@ -82,9 +82,9 @@ export default function Dashboard() {
           <h3 className="chart-title">Terrains par statut</h3>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={barData} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e4e6dc" vertical={false} />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#5d675e' }} axisLine={{ stroke: '#c8cec0' }} tickLine={false} />
+              <YAxis tick={{ fontSize: 12, fill: '#5d675e' }} allowDecimals={false} axisLine={false} tickLine={false} />
               <Tooltip />
               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                 {barData.map((entry, i) => (

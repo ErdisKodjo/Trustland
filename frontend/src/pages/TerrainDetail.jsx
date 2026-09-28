@@ -33,14 +33,14 @@ const IconDocument = () => (
 )
 
 const TIMELINE_CONFIG = {
-  transaction:    { icon: <IconTransaction />,    label: 'Transaction',      color: '#2563eb' },
-  litige:         { icon: <IconLitige />,         label: 'Litige déclaré',   color: '#1d4ed8' },
-  litige_resolu:  { icon: <IconLitigeResolu />,   label: 'Litige résolu',    color: '#2563eb' },
-  alerte:         { icon: <IconAlerte />,         label: 'Alerte IA',        color: '#60a5fa' },
-  document:       { icon: <IconDocument />,       label: 'Document',         color: '#64748b' },
+  transaction:    { icon: <IconTransaction />,    label: 'Transaction',      color: '#26713c' },
+  litige:         { icon: <IconLitige />,         label: 'Litige déclaré',   color: '#b3261e' },
+  litige_resolu:  { icon: <IconLitigeResolu />,   label: 'Litige résolu',    color: '#1e5a31' },
+  alerte:         { icon: <IconAlerte />,         label: 'Alerte IA',        color: '#b45309' },
+  document:       { icon: <IconDocument />,       label: 'Document',         color: '#5d675e' },
 }
 
-const NIVEAU_COLORS = { faible: '#93c5fd', moyen: '#3b82f6', critique: '#1e40af' }
+const NIVEAU_COLORS = { faible: '#b9d4c0', moyen: '#b45309', critique: '#b3261e' }
 
 function fmtDate(iso) {
   return new Date(iso).toLocaleDateString('fr-FR', {
@@ -62,7 +62,7 @@ function Timeline({ events }) {
   return (
     <div className="timeline">
       {events.map((ev, i) => {
-        const cfg = TIMELINE_CONFIG[ev.type] ?? { icon: null, label: ev.type, color: '#94a3b8' }
+        const cfg = TIMELINE_CONFIG[ev.type] ?? { icon: null, label: ev.type, color: '#5d675e' }
         return (
           <div key={i} className="timeline-item">
             <div className="timeline-left">

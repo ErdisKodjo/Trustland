@@ -55,32 +55,45 @@ export default function Register() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
-        <img src={logo} alt="TrustLand" className="auth-logo" />
-        <p className="auth-sub">Créer un compte</p>
+      <aside className="auth-aside">
+        <div>
+          <p className="auth-aside-quote">Votre dossier foncier, suivi de bout en bout.</p>
+          <p className="auth-aside-sub">
+            Créez votre compte pour consulter le registre, suivre vos parcelles
+            et recevoir les alertes liées à vos dossiers.
+          </p>
+        </div>
+        <p className="auth-aside-footer">TrustLand · QuadraTech — TCCHackDefend 2026</p>
+      </aside>
 
-        {error && <div className="alert alert-error">{error}</div>}
+      <div className="auth-panel">
+        <div className="auth-card">
+          <img src={logo} alt="TrustLand" className="auth-logo" />
+          <h1 className="auth-title">Créer un compte</h1>
+          <p className="auth-sub">Rejoignez le registre foncier numérique</p>
+
+          {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Nom d'utilisateur</label>
-            <input className="form-control" {...field('username')} required autoFocus />
+            <label className="form-label" htmlFor="reg-username">Nom d'utilisateur</label>
+            <input id="reg-username" className="form-control" {...field('username')} required autoFocus autoComplete="username" />
           </div>
           <div className="form-group">
-            <label className="form-label">Email</label>
-            <input type="email" className="form-control" {...field('email')} />
+            <label className="form-label" htmlFor="reg-email">Email</label>
+            <input id="reg-email" type="email" className="form-control" {...field('email')} autoComplete="email" />
           </div>
           <div className="form-group">
-            <label className="form-label">Mot de passe</label>
-            <input type="password" className="form-control" {...field('password')} required />
+            <label className="form-label" htmlFor="reg-password">Mot de passe</label>
+            <input id="reg-password" type="password" className="form-control" {...field('password')} required autoComplete="new-password" />
           </div>
           <div className="form-group">
-            <label className="form-label">Confirmer le mot de passe</label>
-            <input type="password" className="form-control" {...field('confirm')} required />
+            <label className="form-label" htmlFor="reg-confirm">Confirmer le mot de passe</label>
+            <input id="reg-confirm" type="password" className="form-control" {...field('confirm')} required autoComplete="new-password" />
           </div>
           <div className="form-group">
-            <label className="form-label">Rôle</label>
-            <select className="form-control" {...field('role')}>
+            <label className="form-label" htmlFor="reg-role">Rôle</label>
+            <select id="reg-role" className="form-control" {...field('role')}>
               <option value="proprietaire">Propriétaire</option>
             </select>
           </div>
@@ -92,6 +105,7 @@ export default function Register() {
         <p className="auth-footer">
           Déjà un compte ? <Link to="/login">Se connecter</Link>
         </p>
+        </div>
       </div>
     </div>
   )

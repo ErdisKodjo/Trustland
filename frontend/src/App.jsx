@@ -27,6 +27,16 @@ function AppLayout() {
       <main className="main-content">
         <Outlet />
       </main>
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <span className="site-footer-brand">
+            <span className="brand-trust">Trust</span>Land — Registre foncier numérique
+          </span>
+          <span className="site-footer-note">
+            République Togolaise · QuadraTech · Sécurité. Confiance. Traçabilité.
+          </span>
+        </div>
+      </footer>
     </>
   )
 }

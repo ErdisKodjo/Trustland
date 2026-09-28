@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import logo from '../assets/logo.jpg'
+import { BrandMark } from './icons'
 
 export default function Navbar() {
   const { user, logout } = useAuth()
@@ -15,8 +15,9 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/" className="navbar-brand">
-        <img src={logo} alt="TrustLand" className="navbar-logo" />
+      <Link to="/" className="navbar-brand" aria-label="TrustLand — accueil">
+        <span className="navbar-brand-mark"><BrandMark /></span>
+        <span><span className="brand-trust">Trust</span><span className="brand-land">Land</span></span>
       </Link>
 
       <div className="navbar-links">
