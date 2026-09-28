@@ -78,7 +78,7 @@ export default function Proprietaires() {
         <div className="qr-overlay" onClick={() => setQrModal(null)}>
           <div className="qr-modal" onClick={e => e.stopPropagation()}>
             <img src={toRelativeUrl(qrModal)} alt="QR Code terrain" />
-            <p className="text-muted" style={{ marginTop: '0.75rem' }}>
+            <p className="text-muted">
               Cliquer en dehors pour fermer
             </p>
           </div>

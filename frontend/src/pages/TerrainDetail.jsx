@@ -93,7 +93,7 @@ function TimelineContent({ ev }) {
           <p><strong>{ev.vendeur}</strong> &rarr; <strong>{ev.acheteur}</strong></p>
           <p className="text-muted">{parseFloat(ev.montant).toLocaleString('fr-FR')} FCFA</p>
           {ev.bloc_index != null && (
-            <p className="text-muted" style={{ fontSize: '.78rem' }}>
+            <p className="text-muted text-xs">
               Bloc #{ev.bloc_index} · hash {ev.bloc_hash}
             </p>
           )}
@@ -131,7 +131,7 @@ function TimelineContent({ ev }) {
       return (
         <div className="tl-detail">
           <p>{ev.type_document}</p>
-          <p className="text-muted" style={{ fontSize: '.78rem' }}>{ev.nom_fichier}</p>
+          <p className="text-muted text-xs">{ev.nom_fichier}</p>
         </div>
       )
     default:
@@ -194,8 +194,7 @@ function TerrainLitiges({ terrainId }) {
             <span>{fmtDate(l.date_declaration)}</span>
             {l.statut === 'ouvert' && isAdmin && (
               <button
-                className="btn btn-sm btn-success"
-                style={{ marginLeft: 'auto' }}
+                className="btn btn-sm btn-success ml-auto"
                 onClick={() => resolving === l.id ? setResolving(null) : (setResolving(l.id), setResoText(''), setResoErr(null))}
               >
                 {resolving === l.id ? 'Annuler' : 'Marquer résolu'}
@@ -221,7 +220,7 @@ function TerrainLitiges({ terrainId }) {
                 onChange={e => setResoText(e.target.value)}
               />
               {resoErr && <p className="form-error">{resoErr}</p>}
-              <div className="form-actions" style={{ marginTop: '.5rem' }}>
+              <div className="form-actions">
                 <button className="btn btn-sm btn-success" onClick={() => handleResoudre(l.id)} disabled={resoLoading}>
                   {resoLoading ? 'Enregistrement…' : 'Confirmer'}
                 </button>
@@ -285,7 +284,7 @@ export default function TerrainDetail() {
   if (error)   return (
     <div className="page">
       <p className="text-muted">{error}</p>
-      <button className="btn btn-outline" style={{ marginTop: '.75rem' }} onClick={() => navigate(-1)}>← Retour</button>
+      <button className="btn btn-outline mt-05" onClick={() => navigate(-1)}>← Retour</button>
     </div>
   )
 
@@ -305,7 +304,7 @@ export default function TerrainDetail() {
         <div className="qr-overlay" onClick={() => setQrOpen(false)}>
           <div className="qr-modal" onClick={e => e.stopPropagation()}>
             <img src={qrUrl} alt="QR Code" />
-            <p className="text-muted" style={{ marginTop: '.75rem' }}>Cliquer en dehors pour fermer</p>
+            <p className="text-muted">Cliquer en dehors pour fermer</p>
           </div>
         </div>
       )}
@@ -313,13 +312,13 @@ export default function TerrainDetail() {
       {/* En-tête */}
       <div className="page-header">
         <div>
-          <button className="btn btn-sm btn-outline" style={{ marginBottom: '.5rem' }} onClick={() => navigate(-1)}>
+          <button className="btn btn-sm btn-outline mb-05" onClick={() => navigate(-1)}>
             ← Retour
           </button>
-          <h2 style={{ fontSize: '1.25rem' }}>{terrain.adresse}</h2>
+          <h2 className="page-title-sm">{terrain.adresse}</h2>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', flexWrap: 'wrap' }}>
-          <span className={`badge badge-${terrain.statut}`} style={{ fontSize: '.82rem' }}>
+        <div className="page-header-actions">
+          <span className={`badge badge-lg badge-${terrain.statut}`}>
             {STATUT_LABELS[terrain.statut]}
           </span>
           {user && (
@@ -354,7 +353,7 @@ export default function TerrainDetail() {
               <dt>Coordonnées GPS</dt>
               <dd><code>{terrain.coordonnees_gps}</code></dd>
               <dt>Identifiant unique</dt>
-              <dd><code style={{ fontSize: '.7rem', wordBreak: 'break-all' }}>{terrain.id_unique}</code></dd>
+              <dd><code>{terrain.id_unique}</code></dd>
               <dt>Enregistré le</dt>
               <dd>{new Date(terrain.date_enregistrement).toLocaleDateString('fr-FR')}</dd>
               {prop && (
@@ -363,9 +362,9 @@ export default function TerrainDetail() {
                   <dd>
                     <strong>{prop.prenom} {prop.nom}</strong>
                     <br />
-                    <span style={{ fontSize: '.8rem', color: 'var(--muted)' }}>{prop.email}</span>
+                    <span className="text-sm text-muted">{prop.email}</span>
                     {prop.telephone && (
-                      <> · <span style={{ fontSize: '.8rem', color: 'var(--muted)' }}>{prop.telephone}</span></>
+                      <> · <span className="text-sm text-muted">{prop.telephone}</span></>
                     )}
                   </dd>
                 </>
@@ -378,13 +377,13 @@ export default function TerrainDetail() {
             {qrUrl ? (
               <div className="td-qr-wrap">
                 <img src={qrUrl} alt="QR Code terrain" className="td-qr-img" title="Cliquer pour agrandir" onClick={() => setQrOpen(true)} />
-                <p className="text-muted" style={{ fontSize: '.72rem', marginTop: '.5rem', textAlign: 'center' }}>Cliquer pour agrandir</p>
-                <a href={qrUrl} download={`terrain-${terrain.id_unique}.png`} className="btn btn-sm btn-outline" style={{ marginTop: '.75rem' }}>
+                <p className="text-muted">Cliquer pour agrandir</p>
+                <a href={qrUrl} download={`terrain-${terrain.id_unique}.png`} className="btn btn-sm btn-outline">
                   Télécharger
                 </a>
               </div>
             ) : (
-              <p className="text-muted" style={{ fontSize: '.82rem' }}>Non généré</p>
+              <p className="text-muted text-sm">Non généré</p>
             )}
           </div>
         </div>
@@ -392,14 +391,14 @@ export default function TerrainDetail() {
 
       {/* Onglet : Litiges */}
       {activeTab === 'litiges' && (
-        <div style={{ marginTop: '.5rem' }}>
+        <div className="mt-05">
           <TerrainLitiges terrainId={terrain.id} />
         </div>
       )}
 
       {/* Onglet : Historique */}
       {activeTab === 'historique' && (
-        <div className="card" style={{ marginTop: '.5rem', padding: '1.25rem' }}>
+        <div className="card card-pad mt-05">
           {histLoading ? (
             <p className="text-muted">Chargement de l'historique…</p>
           ) : histErr ? (
@@ -412,8 +411,8 @@ export default function TerrainDetail() {
 
       {/* Onglet : Documents */}
       {activeTab === 'documents' && (
-        <div className="card" style={{ overflow: 'hidden', marginTop: '.5rem' }}>
-          <div className="td-section-title" style={{ padding: '.875rem 1.25rem .5rem', borderBottom: '1px solid var(--border)', marginBottom: 0 }}>
+        <div className="card card-flush mt-05">
+          <div className="td-section-title">
             Documents du terrain
           </div>
           {user ? (

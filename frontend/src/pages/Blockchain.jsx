@@ -39,7 +39,7 @@ export default function Blockchain() {
         <div>
           <h2>Blockchain</h2>
           {!loading && (
-            <p className="text-muted" style={{ marginTop: '.25rem' }}>
+            <p className="text-muted">
               {blocs.length} bloc{blocs.length !== 1 ? 's' : ''} enregistré{blocs.length !== 1 ? 's' : ''}
             </p>
           )}
@@ -64,7 +64,7 @@ export default function Blockchain() {
       {loading ? (
         <p className="text-muted">Chargement…</p>
       ) : blocs.length === 0 ? (
-        <div className="card" style={{ padding: '2rem', textAlign: 'center' }}>
+        <div className="card empty-inline">
           <p className="text-muted">
             Aucun bloc. La chaîne s'initialise automatiquement à la première transaction.
           </p>

@@ -77,7 +77,7 @@ export default function Transactions() {
                   <span className="card-title">
                     {tx.terrain_detail?.adresse ?? `Terrain #${tx.terrain}`}
                   </span>
-                  <span className="text-muted" style={{ fontSize: '.82rem' }}>
+                  <span className="text-muted text-sm">
                     {new Date(tx.date_transaction).toLocaleDateString('fr-FR')}
                   </span>
                 </div>
@@ -99,8 +99,7 @@ export default function Transactions() {
                     <span className="badge badge-bloc">Bloc #{bloc.index}</span>
                   )}
                   <button
-                    className="btn btn-sm btn-outline"
-                    style={{ marginLeft: 'auto' }}
+                    className="btn btn-sm btn-outline ml-auto"
                     onClick={() => toggleExpand(tx.id)}
                   >
                     {isOpen ? 'Masquer' : 'Détails'}
@@ -125,7 +124,7 @@ export default function Transactions() {
                     {bloc != null ? (
                       <div className="tx-detail-section">
                         <h4>Bloc blockchain #{bloc.index}</h4>
-                        <div className="bloc-hashes" style={{ marginBottom: '.5rem' }}>
+                        <div className="bloc-hashes">
                           <div className="hash-line">
                             <span className="hash-label">Timestamp</span>
                             <code className="hash-value">
@@ -145,7 +144,7 @@ export default function Transactions() {
                         </div>
                       </div>
                     ) : (
-                      <p className="text-muted" style={{ fontSize: '.82rem' }}>
+                      <p className="text-muted text-sm">
                         Aucun bloc blockchain associé à cette transaction.
                       </p>
                     )}

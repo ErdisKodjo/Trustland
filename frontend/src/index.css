@@ -112,6 +112,14 @@ code, pre { font-family: var(--mono); font-size: .92em; }
 .text-muted { color: var(--mute); }
 .w-full { width: 100%; }
 
+/* Micro-utilities — remplaçent les styles inline résiduels des pages.
+   Périmètre volontairement réduit : tailles de texte, espaces, poussée. */
+.text-sm { font-size: .84rem; }
+.text-xs { font-size: .78rem; }
+.ml-auto { margin-left: auto; }
+.mt-05   { margin-top: .5rem; }
+.mb-05   { margin-bottom: .5rem; }
+
 .page {
   max-width: 1180px;
   margin: 0 auto;
@@ -135,6 +143,15 @@ code, pre { font-family: var(--mono); font-size: .92em; }
   font-size: 1.65rem;
   font-weight: 700;
   letter-spacing: -0.025em;
+}
+.page-header h2.page-title-sm { font-size: 1.3rem; }  /* pages de détail */
+.page-header .text-muted { margin-top: .2rem; }
+.page-header-sub { display: block; font-size: .82rem; margin-top: .2rem; }
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -191,6 +208,14 @@ code, pre { font-family: var(--mono); font-size: .92em; }
 }
 .btn-ghost:hover:not(:disabled) { background: var(--surface-soft); color: var(--ink); }
 
+/* Variante destructive ghost — suppression de compte */
+.btn-outline.btn-danger-ghost { color: var(--danger); border-color: #f0cfcb; }
+.btn-outline.btn-danger-ghost:hover:not(:disabled) {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  color: var(--danger-deep);
+}
+
 .btn-sm { font-size: .82rem; padding: .5rem .85rem; }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -213,6 +238,7 @@ code, pre { font-family: var(--mono); font-size: .92em; }
 }
 
 .badge-libre          { background: var(--success-bg);   color: var(--success-deep); }
+.badge-lg             { font-size: .82rem; }
 .badge-en_transaction { background: var(--info-bg);      color: var(--info-deep); }
 .badge-litige         { background: var(--danger-bg);    color: var(--danger-deep); }
 .badge-en            { background: var(--info-bg);      color: var(--info-deep); }
@@ -284,6 +310,7 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
 .form-actions { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
 
 .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 1.25rem; }
+.form-grid .col-2 { grid-column: 1 / -1; }
 
 .form-card {
   background: var(--surface);
@@ -292,6 +319,7 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
 }
+.form-card-narrow { max-width: 520px; }
 .form-card > h3 {
   font-size: 1.05rem;
   margin-bottom: 1.1rem;
@@ -315,6 +343,149 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
 }
 .alert-error   { background: var(--danger-bg);  color: var(--danger-deep);  border-color: #f0cfcb; }
 .alert-success { background: var(--success-bg); color: var(--success-deep); border-color: var(--green-200); }
+.alert-after-form { margin-top: 1rem; }
+
+/* ── Alertes de fraude — filtres, compteurs, cartes de sévérité ─── */
+.alerte-counts { display: flex; gap: .5rem; flex-wrap: wrap; }
+.alerte-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .8rem;
+  font-weight: 600;
+  padding: .32rem .8rem;
+  border-radius: var(--r-pill);
+}
+.alerte-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.alerte-pill-critique { background: var(--danger-bg); color: var(--danger-deep); }
+.alerte-pill-critique .alerte-dot { background: var(--danger); }
+.alerte-pill-moyen    { background: var(--amber-50);  color: var(--amber-700); }
+.alerte-pill-moyen .alerte-dot    { background: var(--amber-600); }
+.alerte-pill-faible   { background: var(--info-bg);   color: var(--info-deep); }
+.alerte-pill-faible .alerte-dot    { background: var(--info); }
+
+.chip-group {
+  display: flex;
+  gap: .45rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.chip {
+  font-family: var(--font);
+  font-size: .84rem;
+  font-weight: 600;
+  color: var(--mute);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: .42rem 1rem;
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.chip:hover { color: var(--green-700); border-color: var(--border-strong); }
+.chip-active,
+.chip-active:hover {
+  color: #fff;
+  background: var(--green-700);
+  border-color: var(--green-700);
+}
+.chip-active:hover { background: var(--green-600); }
+
+.alerte-list { display: flex; flex-direction: column; gap: .75rem; }
+.alerte-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border-strong);
+  border-radius: var(--r-card);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .15s ease;
+}
+.alerte-card:hover { box-shadow: var(--shadow-md); }
+.alerte-critique { border-left-color: var(--danger); }
+.alerte-moyen    { border-left-color: var(--amber-600); }
+.alerte-faible   { border-left-color: var(--info); }
+
+.alerte-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+.alerte-head-left { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; }
+.alerte-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: .2rem .6rem;
+  border-radius: var(--r-pill);
+}
+.alerte-badge-critique { background: var(--danger-bg); color: var(--danger-deep); }
+.alerte-badge-critique .alerte-dot { background: var(--danger); }
+.alerte-badge-moyen    { background: var(--amber-50);  color: var(--amber-700); }
+.alerte-badge-moyen .alerte-dot    { background: var(--amber-600); }
+.alerte-badge-faible   { background: var(--info-bg);   color: var(--info-deep); }
+.alerte-badge-faible .alerte-dot    { background: var(--info); }
+
+.alerte-type { font-size: .92rem; font-weight: 600; color: var(--ink); }
+.alerte-date {
+  font-size: .76rem;
+  color: var(--mute);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.alerte-desc {
+  margin-top: .6rem;
+  font-size: .88rem;
+  line-height: 1.55;
+  color: var(--body-c);
+}
+.alerte-terrain {
+  margin-top: .75rem;
+  padding-top: .7rem;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+  font-size: .8rem;
+}
+.alerte-terrain-label { color: var(--mute); }
+.alerte-terrain-link { font-weight: 600; }
+.alerte-terrain .badge { font-size: .65rem; }
+
+/* État vide — serein, jamais rouge : l'absence d'alerte est une bonne nouvelle */
+.empty-state {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.empty-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--green-50);
+  color: var(--green-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.empty-title { font-weight: 600; color: var(--ink); }
+.empty-state .text-muted { margin-top: .3rem; font-size: .86rem; }
 
 /* ══════════════════════════════════════════════════════════════════
    CARTES & STATISTIQUES
@@ -336,13 +507,32 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
   flex-wrap: wrap;
 }
 .card-title { font-size: 1rem; font-weight: 700; }
-.card-body  { padding: 1.25rem; }
+.card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .88rem;
+  color: var(--body-c);
+}
 .card-footer {
   padding: .9rem 1.25rem;
   border-top: 1px solid var(--border);
   background: var(--surface-soft);
   border-radius: 0 0 var(--r-card) var(--r-card);
 }
+
+/* Liste responsive de cartes (terrains, transactions, litiges) */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+.card-flush  { overflow: hidden; }
+.card-scroll { overflow-x: auto; }
+.card-pad    { padding: 1.25rem; }
+.empty-inline { padding: 2rem; text-align: center; }
 
 .stat-card {
   background: var(--surface);
@@ -951,6 +1141,15 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
   align-items: start;
 }
 .td-info { display: flex; flex-direction: column; gap: 1rem; }
+.td-grid {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: .55rem 1rem;
+  font-size: .9rem;
+}
+.td-grid dt { font-weight: 600; color: var(--mute); }
+.td-grid dd { color: var(--body-c); word-break: break-word; }
+.td-grid code { font-size: .82em; }
 
 .td-tabs { display: flex; gap: .3rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
 .td-tab {
@@ -1340,7 +1539,8 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
   color: var(--ink);
   flex-wrap: wrap;
 }
-.tx-vendeur { color: var(--mute); font-weight: 500; }
+.tx-vendeur  { color: var(--mute); font-weight: 500; }
+.tx-acheteur { color: var(--ink);  font-weight: 700; }
 .tx-montant {
   font-size: 1.05rem;
   font-weight: 700;
@@ -1593,6 +1793,24 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
 .loading-note { color: var(--mute); font-size: .88rem; padding: 2rem; text-align: center; }
 
 /* ══════════════════════════════════════════════════════════════════
+   FINITIONS — règles scopées remplaçant les styles inline résiduels
+   ══════════════════════════════════════════════════════════════════ */
+.table-actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+.form-intro { font-size: .86rem; margin-bottom: 1.25rem; }
+.qr-modal .text-muted { margin-top: .75rem; font-size: .8rem; text-align: center; }
+.litige-meta-actions { display: flex; gap: .5rem; margin-left: auto; flex-wrap: wrap; }
+.litige-resolve-form .form-actions { margin-top: .5rem; }
+.tx-details .bloc-hashes { margin-bottom: .5rem; }
+.verif-form-card .verif-terrain-card .btn { margin-top: .875rem; display: inline-block; }
+.td-qr-wrap .text-muted { margin-top: .5rem; font-size: .74rem; text-align: center; }
+.td-qr-wrap .btn { margin-top: .75rem; }
+.card-flush > .td-section-title {
+  padding: .875rem 1.25rem .5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════
    RESPONSIVE — replis explicites par section
    ══════════════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
@@ -1627,6 +1845,9 @@ textarea.form-control { resize: vertical; min-height: 6rem; }
   .table { font-size: .8rem; }
   .table th, .table td { padding: .6rem .6rem; }
   .dashboard-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .td-grid { grid-template-columns: 1fr; gap: .1rem; }
+  .td-grid dt { margin-top: .55rem; }
+  .alerte-terrain { align-items: flex-start; }
 }
 
 /* ── Accessibilité : mouvement réduit ────────────────────────────── */

@@ -63,7 +63,7 @@ export default function ProfilUtilisateur() {
             {user.username.charAt(0).toUpperCase()}
           </div>
           <h3 className="profil-username">{user.username}</h3>
-          <span className={`badge badge-role badge-${user.role}`} style={{ fontSize: '.85rem' }}>
+          <span className={`badge badge-lg badge-role badge-${user.role}`}>
             {ROLE_LABELS[user.role] ?? user.role}
           </span>
 
@@ -82,7 +82,7 @@ export default function ProfilUtilisateur() {
           <h3>Sécurité</h3>
 
           {pwSuccess && (
-            <div className="alert alert-success" style={{ marginBottom: '1rem' }}>{pwSuccess}</div>
+            <div className="alert alert-success">{pwSuccess}</div>
           )}
 
           {!showPw ? (

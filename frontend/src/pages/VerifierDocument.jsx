@@ -53,7 +53,7 @@ export default function VerifierDocument() {
 
       <div className="card form-card verif-form-card">
         <h3>Vérifier un document</h3>
-        <p className="text-muted" style={{ fontSize: '.85rem', marginBottom: '1.25rem' }}>
+        <p className="text-muted form-intro">
           Déposez un document (PDF, image) pour vérifier s'il a été enregistré
           dans le registre foncier TrustLand. La vérification se base sur
           l'empreinte cryptographique (SHA-256) du fichier.
@@ -78,7 +78,7 @@ export default function VerifierDocument() {
           </div>
         </form>
 
-        {error && <div className="alert alert-error" style={{ marginTop: '1rem' }}>{error}</div>}
+        {error && <div className="alert alert-error alert-after-form">{error}</div>}
 
         {result && (
           <div className={`verif-result ${result.authentique ? 'verif-ok' : 'verif-ko'}`}>
@@ -90,7 +90,7 @@ export default function VerifierDocument() {
                   Ce document a bien été enregistré dans le registre TrustLand.
                 </p>
                 {result.type_document && (
-                  <p style={{ fontSize: '.85rem' }}>
+                  <p className="text-sm">
                     Type : <strong>{result.type_document}</strong>
                   </p>
                 )}
@@ -122,7 +122,6 @@ export default function VerifierDocument() {
                     <Link
                       to={`/terrains/${result.terrain.id}`}
                       className="btn btn-sm btn-primary"
-                      style={{ marginTop: '0.875rem', display: 'inline-block' }}
                     >
                       Voir le terrain
                     </Link>

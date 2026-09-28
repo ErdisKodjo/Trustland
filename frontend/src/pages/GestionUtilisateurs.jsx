@@ -65,16 +65,16 @@ export default function GestionUtilisateurs() {
     <div className="page">
       <div className="page-header">
         <h2>Gestion des utilisateurs</h2>
-        <span className="text-muted" style={{ fontSize: '.85rem' }}>{users.length} compte(s)</span>
+        <span className="text-muted text-sm">{users.length} compte(s)</span>
       </div>
 
-      {error   && <div className="alert alert-error"   style={{ marginBottom: '1rem' }}>{error}</div>}
-      {success && <div className="alert alert-success" style={{ marginBottom: '1rem' }}>{success}</div>}
+      {error   && <div className="alert alert-error">{error}</div>}
+      {success && <div className="alert alert-success">{success}</div>}
 
       {loading ? (
         <p className="text-muted">Chargement…</p>
       ) : (
-        <div className="card" style={{ overflow: 'hidden' }}>
+        <div className="card card-flush">
           <table className="table">
             <thead>
               <tr>
@@ -119,12 +119,12 @@ export default function GestionUtilisateurs() {
                         className="gu-checkbox"
                       />
                     </td>
-                    <td style={{ fontSize: '.82rem', color: 'var(--muted)' }}>
+                    <td className="text-sm text-muted">
                       {u.date_joined ? new Date(u.date_joined).toLocaleDateString('fr-FR') : '—'}
                     </td>
                     <td>
                       {isMe ? (
-                        <span className="text-muted" style={{ fontSize: '.8rem' }}>—</span>
+                        <span className="text-muted text-sm">—</span>
                       ) : (
                         <button
                           className="btn btn-sm btn-primary"

@@ -115,7 +115,7 @@ export default function AdminPanel() {
       <div className="page-header">
         <div>
           <h2>Espace administrateur</h2>
-          <span className="text-muted" style={{ fontSize: '.82rem', marginTop: '.2rem', display: 'block' }}>
+          <span className="text-muted page-header-sub">
             {users.length} compte(s) —{' '}
             <span className="badge badge-role badge-admin">{adminCount} admin</span>{' '}
             <span className="badge badge-role badge-agent">{agentCount} agent(s)</span>{' '}
@@ -124,7 +124,7 @@ export default function AdminPanel() {
         </div>
       </div>
 
-      <div className="td-tabs" style={{ marginBottom: '1.5rem' }}>
+      <div className="td-tabs">
         <button
           className={`td-tab ${tab === 'users' ? 'td-tab-active' : ''}`}
           onClick={() => setTab('users')}
@@ -142,15 +142,15 @@ export default function AdminPanel() {
       {/* ── Onglet liste ───────────────────────────────── */}
       {tab === 'users' && (
         <>
-          {error   && <div className="alert alert-error"   style={{ marginBottom: '1rem' }}>{error}</div>}
-          {success && <div className="alert alert-success" style={{ marginBottom: '1rem' }}>{success}</div>}
+          {error   && <div className="alert alert-error">{error}</div>}
+          {success && <div className="alert alert-success">{success}</div>}
 
           {loading ? (
             <p className="text-muted">Chargement…</p>
           ) : users.length === 0 ? (
             <p className="text-muted">Aucun compte trouvé.</p>
           ) : (
-            <div className="card" style={{ overflowX: 'auto' }}>
+            <div className="card card-scroll">
               <table className="table">
                 <thead>
                   <tr>
@@ -176,7 +176,7 @@ export default function AdminPanel() {
                             </div>
                           </div>
                         </td>
-                        <td style={{ fontSize: '.85rem' }}>{u.email || '—'}</td>
+                        <td className="text-sm">{u.email || '—'}</td>
                         <td>
                           <select
                             className="form-control form-control-sm"
@@ -198,14 +198,14 @@ export default function AdminPanel() {
                             className="gu-checkbox"
                           />
                         </td>
-                        <td style={{ fontSize: '.82rem', color: 'var(--muted)' }}>
+                        <td className="text-sm text-muted">
                           {u.date_joined ? new Date(u.date_joined).toLocaleDateString('fr-FR') : '—'}
                         </td>
                         <td>
                           {isMe ? (
-                            <span className="text-muted" style={{ fontSize: '.8rem' }}>—</span>
+                            <span className="text-muted text-sm">—</span>
                           ) : (
-                            <div style={{ display: 'flex', gap: '.4rem' }}>
+                            <div className="table-actions">
                               <button
                                 className="btn btn-sm btn-primary"
                                 disabled={saving === u.id}
@@ -214,8 +214,7 @@ export default function AdminPanel() {
                                 {saving === u.id ? '…' : 'Enregistrer'}
                               </button>
                               <button
-                                className="btn btn-sm btn-outline"
-                                style={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                                className="btn btn-sm btn-outline btn-danger-ghost"
                                 disabled={deleting === u.id}
                                 onClick={() => handleDelete(u)}
                               >
@@ -236,13 +235,13 @@ export default function AdminPanel() {
 
       {/* ── Onglet création ────────────────────────────── */}
       {tab === 'create' && (
-        <div className="card form-card" style={{ maxWidth: 520 }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem' }}>
+        <div className="card form-card form-card-narrow">
+          <h3>
             Créer un nouveau compte
           </h3>
 
-          {formError   && <div className="alert alert-error"   style={{ marginBottom: '1rem' }}>{formError}</div>}
-          {formSuccess && <div className="alert alert-success" style={{ marginBottom: '1rem' }}>{formSuccess}</div>}
+          {formError   && <div className="alert alert-error">{formError}</div>}
+          {formSuccess && <div className="alert alert-success">{formSuccess}</div>}
 
           <form onSubmit={handleCreate}>
             <div className="form-grid">
@@ -290,7 +289,7 @@ export default function AdminPanel() {
                   ))}
                 </select>
               </div>
-              <div className="form-group col-2" style={{ marginTop: '.5rem' }}>
+              <div className="form-group col-2">
                 <button className="btn btn-primary w-full" disabled={creating}>
                   {creating ? 'Création en cours…' : 'Créer le compte'}
                 </button>

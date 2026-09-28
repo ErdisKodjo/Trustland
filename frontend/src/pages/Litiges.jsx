@@ -110,7 +110,7 @@ export default function Litiges() {
           </span>
           <span>{new Date(l.date_declaration).toLocaleDateString('fr-FR')}</span>
 
-          <div style={{ display: 'flex', gap: '.5rem', marginLeft: 'auto', flexWrap: 'wrap' }}>
+          <div className="litige-meta-actions">
             {l.statut === 'ouvert' && isAdmin && (
               <button
                 className="btn btn-sm btn-success"
@@ -138,7 +138,7 @@ export default function Litiges() {
               onChange={e => setResoText(e.target.value)}
             />
             {resoError && <p className="form-error">{resoError}</p>}
-            <div className="form-actions" style={{ marginTop: '.5rem' }}>
+            <div className="form-actions">
               <button
                 className="btn btn-sm btn-success"
                 onClick={() => handleResoudre(l.id)}
@@ -164,7 +164,7 @@ export default function Litiges() {
         <div className="qr-overlay" onClick={() => setQrModal(null)}>
           <div className="qr-modal" onClick={e => e.stopPropagation()}>
             <img src={toRelativeUrl(qrModal)} alt="QR Code terrain" />
-            <p className="text-muted" style={{ marginTop: '0.75rem' }}>Cliquer en dehors pour fermer</p>
+            <p className="text-muted">Cliquer en dehors pour fermer</p>
           </div>
         </div>
       )}

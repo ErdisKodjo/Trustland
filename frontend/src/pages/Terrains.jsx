@@ -40,9 +40,7 @@ export default function Terrains() {
         <div className="qr-overlay" onClick={() => setQrModal(null)}>
           <div className="qr-modal" onClick={e => e.stopPropagation()}>
             <img src={toRelativeUrl(qrModal)} alt="QR Code terrain" />
-            <p className="text-muted" style={{ marginTop: '0.75rem' }}>
-              Cliquer en dehors pour fermer
-            </p>
+            <p className="text-muted">Cliquer en dehors pour fermer</p>
           </div>
         </div>
       )}
@@ -98,7 +96,7 @@ export default function Terrains() {
                     onClick={() => setQrModal(t.qr_code)}
                   />
                 ) : (
-                  <span className="text-muted" style={{ fontSize: '.75rem' }}>Pas de QR</span>
+                  <span className="text-muted text-xs">Pas de QR</span>
                 )}
 
                 <Link to={`/terrains/${t.id}`} className="btn btn-sm btn-outline">
