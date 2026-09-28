@@ -1,0 +1,29 @@
+# Règles d'analyse Dart — TrustLand Mobile
+# Style officiel Flutter + strictesses raisonnables pour un projet d'équipe.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    # — Style —
+    prefer_single_quotes: true
+    always_declare_return_types: true
+    unawaited_futures: true
+    directives_ordering: true
+    sort_child_properties_last: true
+    use_key_in_widget_constructors: true
+
+    # — Robustesse (app foncière : la fiabilité compte) —
+    avoid_print: true
+    avoid_catches_without_on_clauses: false   # on tolère catch générique sur le réseau
+    avoid_empty_else: true
+    cancel_subscriptions: true
+    close_sinks: true
+    prefer_final_locals: true

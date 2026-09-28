@@ -1,41 +1,23 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+coverage/
 
-# dependencies
-node_modules/
+# NOTE — Les dossiers android/ et ios/ DOIVENT être versionnés :
+# ils portent les permissions (caméra, GPS, biométrie) décrites dans README.md.
+# Générés localement via : flutter create . --org com.trustland --project-name trustland_mobile
+# Ne pas ajouter android/ ni ios/ à ce fichier.
 
-# Expo
-.expo/
-dist/
-web-build/
-expo-env.d.ts
+# IDE
+.idea/
+.vscode/
+*.iml
 
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
+# Divers
+*.log
 .DS_Store
-*.pem
-
-# local env files
-.env*.local
-
-# typescript
-*.tsbuildinfo
-
-# generated native folders
-/ios
-/android
