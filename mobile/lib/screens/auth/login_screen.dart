@@ -5,6 +5,7 @@ import '../../core/storage/token_store.dart';
 import '../../core/theme/app_theme.dart';
 import '../../state/auth_provider.dart';
 import '../../widgets/widgets.dart';
+import 'register_screen.dart';
 
 /// Connexion — JWT + pré-remplissage du dernier identifiant (SecureStore).
 class LoginScreen extends StatefulWidget {
@@ -174,6 +175,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     )
                                   : const Text('Se connecter'),
+                            ),
+                            const SizedBox(height: 8),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (_) => const RegisterScreen()),
+                              ),
+                              child: const Text(
+                                  'Pas de compte ? Créer un compte propriétaire'),
                             ),
                           ],
                         ),

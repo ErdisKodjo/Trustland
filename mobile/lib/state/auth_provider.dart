@@ -103,6 +103,29 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Inscription publique (rôle `proprietaire` imposé par le backend).
+  /// POST /api/users/register/ — {username, email, password, password2}.
+  /// Renvoie null en cas de succès, le message d'erreur sinon.
+  Future<String?> register(
+    String username,
+    String email,
+    String password, {
+    required String password2,
+  }) async {
+    try {
+      final res = await ApiClient.instance.dio.post('/api/users/register/', data: {
+        'username': username,
+        'email': email,
+        'password': password,
+        'password2': password2,
+      });
+      if (res.statusCode == 201) return null;
+      return ApiClient.messageOf(Exception(res.statusCode));
+    } on Object catch (e) {
+      return ApiClient.messageOf(e);
+    }
+  }
+
   Future<void> logout() async {
     await _tokens.clearSession();
     await OfflineCache.instance.purge();
