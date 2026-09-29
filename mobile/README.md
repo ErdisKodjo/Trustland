@@ -29,6 +29,38 @@ la palette exacte. Composants réutilisables dans `lib/widgets/widgets.dart`
 (`StatCard`, `StatusBadge`, `TerrainCard`, `EmptyState`, `InfoRow`,
 `ProprietairePicker`…).
 
+## 🔔 Notifications push (Firebase Cloud Messaging)
+
+Le mobile utilise **FCM** (`firebase_messaging`) ; le backend enregistre les
+tokens natifs via `POST /api/push-token/` et relaie les envois via l'API
+Expo Push v2 (compatible FCM/APNs).
+
+L'app **fonctionne sans push** : si Firebase n'est pas configuré,
+`PushService` ignore silencieusement l'initialisation.
+
+### Configuration (une fois, par le propriétaire du projet)
+
+```bash
+# 1. Créer un projet sur https://console.firebase.google.com
+#    (Android : package com.trustland.app · iOS : bundle com.trustland.app)
+# 2. Générer les fichiers de configuration Flutter :
+dart pub global activate flutterfire_cli
+flutterfire configure            # écrit lib/firebase_options.dart
+# 3. Android : télécharger google-services.json → android/app/
+#    iOS      : télécharger GoogleService-Info.plist → ios/Runner/ (Xcode)
+# 4. (Envoi via Expo Push) Renseigner la clé serveur FCM du projet
+#    Firebase dans les credentials du projet Expo associé au backend.
+```
+
+Comportement après configuration :
+
+| Situation | Effet |
+|---|---|
+| Message premier-plan | Bandeau in-app + bouton « Voir » |
+| Tap notification (arrière-plan) | Ouvre la fiche terrain si `data.terrainId` |
+| Cold start depuis notification | Même navigation |
+| Rotation du token FCM | Ré-enregistrement automatique |
+
 ## 📦 Prérequis
 
 - **Flutter SDK ≥ 3.22** (`flutter doctor` sans erreur)
@@ -95,8 +127,9 @@ Surcharge possible au build : `flutter run --dart-define=TRUSTLAND_API=http://10
 mobile/
 ├── assets/                    logo (icon.png, splash-icon.png)
 ├── lib/
-│   ├── main.dart              point d'entrée (restauration de session)
+│   ├── main.dart              point d'entrée (restauration de session, FCM)
 │   ├── app.dart               MaterialApp + thème + routeur d'état + lock
+│   ├── services/push_service.dart  FCM : token → backend, bandeaux, navigation
 │   ├── core/
 │   │   ├── config.dart        IP backend, timeouts
 │   │   ├── theme/app_theme.dart   ★ design system Forest (Material 3)
@@ -107,7 +140,7 @@ mobile/
 │   │   ├── auth_provider.dart session + verrouillage inactivité 10 min
 │   │   └── data_provider.dart terrains/stats/transactions/alertes + cache
 │   ├── screens/
-│   │   ├── splash/ auth (login) / shell (5 onglets) / lock
+│   │   ├── splash/ auth (login + inscription) / shell (5 onglets) / lock
 │   │   ├── home/              stats, raccourcis, alertes IA
 │   │   ├── terrains/          liste + filtres, détail, création (GPS + photo)
 │   │   ├── carte/             OpenStreetMap (flutter_map, zéro clé API)
@@ -123,6 +156,7 @@ mobile/
 | Endpoint | Usage |
 |----------|-------|
 | `POST /api/token/` + `/api/token/refresh/` | authentification JWT |
+| `POST /api/users/register/` | inscription publique (rôle propriétaire) + auto-connexion |
 | `GET /api/users/me/` | profil |
 | `GET /api/stats/` | tableau de bord |
 | `GET /api/terrains/` (+ création) | registre des terrains |
@@ -146,10 +180,9 @@ mobile/
 | expo-location | `geolocator` |
 | expo-image-picker | `image_picker` |
 | expo-sharing + FileSystem | `share_plus` + `path_provider` |
+| expo-notifications (Expo push) | `firebase_messaging` (FCM natif) — backend compat |
 
-### 🗺️ Hors périmètre de la migration (roadmap)
+### 🗺️ Restant hors périmètre
 
-- **Notifications push** : nécessite Firebase Cloud Messaging (config console) —
-  l'endpoint backend `/api/push-token/` est prêt à recevoir le jeton FCM.
 - **Protection capture d'écran** : à ajouter par canal natif
   (`FLAG_SECURE` Android / champ `isSecureTextEntry` iOS) après `flutter create`.

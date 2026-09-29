@@ -37,7 +37,7 @@ et un chiffrement des données sensibles.
 |---|---|---|
 | Backend | Django 6 + DRF 3.17, PostgreSQL, JWT (SimpleJWT) | API métier, blockchain, fraude, certificats PDF |
 | Frontend | React 19 + Vite, Leaflet, Recharts | Application web d'administration du registre |
-| Mobile | **Flutter** (Material 3, design system « Cadastre ») | Consultation terrain, scan QR, mode hors-ligne, biométrie |
+| Mobile | **Flutter** (Material 3, design system « Cadastre ») | Inscription, consultation terrain, scan QR, hors-ligne, biométrie, push FCM |
 
 ```
 ┌──────────────────────────────────────────────────────┐
