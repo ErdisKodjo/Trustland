@@ -1,9 +1,17 @@
 """
-Service d'envoi de notifications push via l'API Expo.
+Service d'envoi de notifications push via l'API Expo (Expo Push v2).
 https://docs.expo.dev/push-notifications/sending-notifications/
+
+L'API Expo Push accepte à la fois :
+· les tokens Expo (ExponentPushToken[…]) — app Expo legacy ;
+· les tokens FCM natifs Android et APNs iOS — app Flutter
+  (firebase_messaging), à condition que les credentials correspondants
+  (clé serveur Firebase / clé APNs) soient configurés dans le projet
+  Expo associé (expo.dev → credentials).
 """
 import json
 import logging
+import re
 import urllib.request
 import urllib.error
 
@@ -11,13 +19,22 @@ logger = logging.getLogger('trustland.security')
 
 EXPO_PUSH_URL = 'https://exp.host/--/api/v2/push/send'
 
+# Token FCM natif : longue chaîne alphanumérique (sans espaces),
+# généralement > 100 caractères, distincte du format Expo.
+_FCM_TOKEN_RE = re.compile(r'^[A-Za-z0-9:_\-]{100,}$')
+
+
+def _token_envoyable(token):
+    """Vrai si le token est au format Expo ou FCM natif."""
+    return token.startswith('ExponentPushToken[') or bool(_FCM_TOKEN_RE.match(token))
+
 
 def send_push(tokens, title, body, data=None):
     """
-    Envoie des notifications push Expo à une liste de tokens.
+    Envoie des notifications push à une liste de tokens (Expo ou FCM natif).
 
     Args:
-        tokens  — liste de chaînes ExponentPushToken[…]
+        tokens  — liste de tokens (ExponentPushToken[…] ou FCM/APNs)
         title   — titre de la notification
         body    — corps du message
         data    — dict optionnel (ex: {'terrainId': 42})
@@ -35,7 +52,7 @@ def send_push(tokens, title, body, data=None):
             'priority': 'high',
         }
         for token in tokens
-        if token.startswith('ExponentPushToken[')
+        if _token_envoyable(token)
     ]
     if not messages:
         return

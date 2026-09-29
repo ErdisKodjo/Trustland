@@ -784,6 +784,13 @@ class TestPushTokens(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(PushToken.objects.filter(token=self.token_valide).exists())
 
+    def test_enregistrer_token_fcm_flutter(self):
+        """Les tokens FCM natifs (app Flutter) sont acceptés comme les tokens Expo."""
+        fcm = 'dKj8xLmNpQrStUvWxYz0123456789' * 6  # 174 caractères, format FCM
+        response = self.client.post('/api/push-token/', {'token': fcm}, format='json')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(PushToken.objects.filter(token=fcm).exists())
+
     def test_format_token_invalide(self):
         response = self.client.post('/api/push-token/', {'token': 'invalid-token'}, format='json')
         self.assertEqual(response.status_code, 400)

@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import logging
 import os
+import re
 from io import BytesIO
 
 from django.conf import settings
@@ -316,14 +317,23 @@ class AlerteViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class PushTokenView(APIView):
-    """POST /api/push-token/ — enregistre ou met à jour le push token d'un appareil."""
+    """POST /api/push-token/ — enregistre ou met à jour le push token d'un appareil.
+
+    Formats acceptés :
+    · ExponentPushToken[…] — app Expo legacy ;
+    · token FCM natif (app Flutter, firebase_messaging) — longue chaîne
+      alphanumérique sans espace.
+    """
     permission_classes = [IsAuthenticated]
+
+    # Expo : ExponentPushToken[…ids…] ; FCM : ~140-250 caractères alphanumériques.
+    _TOKEN_RE = re.compile(r'^(ExponentPushToken\[\w{10,}\]|[A-Za-z0-9:_\-]{100,})$')
 
     def post(self, request):
         token = request.data.get('token', '').strip()
         if not token:
             return Response({'error': 'Token requis.'}, status=400)
-        if not token.startswith('ExponentPushToken['):
+        if not self._TOKEN_RE.match(token):
             return Response({'error': 'Format de token invalide.'}, status=400)
         PushToken.objects.update_or_create(
             token=token,
